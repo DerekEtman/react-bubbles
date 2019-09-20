@@ -28,8 +28,6 @@ const ColorList = ({ colors, updateColors }) => {
       .then(window.location.reload(false))
       .catch(err => console.log("Save Err: ", err))
 
- 
-
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
@@ -44,6 +42,37 @@ const ColorList = ({ colors, updateColors }) => {
     // make a delete request to delete this color
 
   };
+
+  const handleColorChange = e => {
+    setColorToEdit({
+      ...setColorToEdit,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleHexChange = e => {
+    setColorToEdit({
+      ...setColorToEdit,
+      [e.target.name]:e.target.value
+    })
+  }
+
+  const handleColorAdd = e => {
+    console.log(e);
+    e.preventDefault();
+    myFunction();
+    axiosWithAuth()
+    .post(`/api/colors`, colorToEdit)
+    .then(res => console.log(res))
+    // .then(window.location.reload(false))
+    .catch(err => console.log(err))
+  }
+
+  function myFunction() {
+    document.getElementsByName("hex").value = "#FF8040";
+  }
+
+  
 
   return (
     <div className="colors-wrap">
@@ -94,8 +123,28 @@ const ColorList = ({ colors, updateColors }) => {
           </div>
         </form>
       )}
-      <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+
+      <div className="color-form">
+        <form onSubmit={handleColorAdd}>
+          <input type="text"
+          name="color"
+          placeholder="Color Name"
+          value={colorToEdit.name}
+          onChange={handleColorChange} 
+          />
+
+          <input
+          type="color"
+          name="hex"
+          value={colorToEdit.code}
+          onChange={handleHexChange}
+          />
+
+          <button>Add Color</button>
+
+        </form>
+      </div>
     </div>
   );
 };
