@@ -22,7 +22,7 @@ const Login = (props) => {
     .post('/login', userLogin)
     .then(res =>{
       localStorage.setItem('token', res.data.payload);      
-      console.log("Token Login: ", res.data.payload); 
+      // console.log("Token Login: ", res.data.payload); 
     })
     .then(props.history.push('/bubblepage'))
     .catch(err => console.log("Login Err: ", err))
