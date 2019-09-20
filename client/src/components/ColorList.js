@@ -24,11 +24,8 @@ const ColorList = ({ colors, updateColors }) => {
     e.preventDefault();
 
       axiosWithAuth()
-      .put(`/api/colors/${id}`, {colorToEdit})
-      .then(res => {
-        console.log("ColorPut res: ", res);
-        setColorToEdit(res);
-      })
+      .put(`/colors/${id}`, {...colorToEdit, [e.target.name]: e.target.value})
+      .then(window.location.reload(false))
       .catch(err => console.log("Save Err: ", err))
 
  
