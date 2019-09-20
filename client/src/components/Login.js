@@ -8,21 +8,21 @@ const Login = (props) => {
   console.log("USERLOGIN: ", userLogin);
 
   const handleChange = e => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setUserLogin({
       ...userLogin,
       [e.target.name]: e.target.value
     })
   }
-  console.log("AxiosWithAuth", axiosWithAuth);
+  // console.log("AxiosWithAuth", axiosWithAuth);
 
   const handleSubmit = e => {
     e.preventDefault();
     axiosWithAuth()
     .post('/login', userLogin)
     .then(res =>{
-      console.log(res); 
-      localStorage.setItem('token', res);      
+      localStorage.setItem('token', res.data.payload);      
+      console.log("Token Login: ", res.data.payload); 
     })
     .then(props.history.push('/bubblepage'))
     .catch(err => console.log("Login Err: ", err))
